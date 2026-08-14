@@ -177,10 +177,8 @@
     margin-top:26px;padding-top:18px;border-top:1px solid #1E3050;
     font-size:12.5px;line-height:1.7;color:var(--dim);
   }
-  .ph{
-    display:inline-block;border-bottom:1px dashed #4A5F85;color:#93A8CB;
-    font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.9em;
-  }
+  .panel a{color:#9FB6DC;text-decoration:none;border-bottom:1px solid #2C4670;transition:color .25s,border-color .25s}
+  .panel a:hover,.panel a:focus-visible{color:var(--cream);border-bottom-color:var(--steel)}
 
   /* Geschwärzte Akte */
   .akte{
@@ -327,7 +325,10 @@
       <dd>Eintragung ins Handelsregister beantragt.</dd>
 
       <dt>Kontakt</dt>
-      <dd><span class="ph">[E-Mail-Adresse]</span></dd>
+      <dd>
+        <a href="mailto:info@zollsoft.de">info@zollsoft.de</a><br>
+        <a href="mailto:info@docyet.com">info@docyet.com</a>
+      </dd>
     </dl>
     <p class="fine">
       Diese Seite setzt keine Cookies, misst nichts und lädt nichts von Dritten.
