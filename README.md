@@ -31,14 +31,14 @@ Dann `http://localhost:4321` im Browser öffnen.
 
 Läuft über GitHub Pages. Jeder Push auf `main` geht automatisch live.
 
-Aktuell erreichbar unter <https://floyet89.github.io/avg-landing/>.
+Erreichbar unter <https://www.ambulante-versorgungsgemeinschaft.de/>.
 
 ## Offen
 
 1. ~~E-Mail-Adresse im Impressum-Overlay~~ — erledigt: info@zollsoft.de und info@docyet.com.
-2. Domain `www.ambulante-versorgungsgemeinschaft.de` per DNS auf GitHub Pages zeigen
-   lassen, dann in den Repo-Settings als Custom Domain eintragen.
-3. Danach `og:url` und `og:image` in `index.html` auf die echte Domain umstellen.
+2. ~~Domain per DNS verbinden~~ — erledigt.
+
+3. ~~`og:url` und `og:image` umstellen~~ — erledigt.
 
 ## Datenschutz
 
