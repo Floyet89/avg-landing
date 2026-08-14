@@ -10,13 +10,14 @@ Countdown läuft auf den **47. Hausärztinnen- und Hausärztetag, 10.09.2026, 09
 | Datei | Zweck |
 |---|---|
 | `index.html` | Die komplette Seite. Kein Build, kein Framework, keine Abhängigkeiten. |
-| `impressum.html` / `datenschutz.html` | Pflichtseiten. **Enthalten noch Platzhalter.** |
-| `legal.css` | Styling der beiden Rechtsseiten. |
 | `favicon.svg` | Kompass-Signet als Browser-Icon. |
 | `og.png` | Vorschaubild fürs Teilen (LinkedIn, WhatsApp, Slack). |
 | `build-og.ps1` | Erzeugt `og.png` neu. Nur nötig, wenn sich Logo oder Datum ändern. |
-| `vercel.json` | Saubere URLs + Security-Header inkl. Content-Security-Policy. |
 | `serve.js` | Lokale Vorschau. Nicht Teil des Deployments. |
+| `vercel.json` | Wird von GitHub Pages ignoriert. Liegt bereit, falls die Seite später auf Vercel umzieht. |
+
+Impressum und Datenschutzhinweis stecken als Overlay direkt in `index.html`. Es gibt
+bewusst keine Unterseiten: die Seite ist ein One-Pager.
 
 ## Lokal ansehen
 
@@ -28,13 +29,16 @@ Dann `http://localhost:4321` im Browser öffnen.
 
 ## Deployment
 
-Jeder Push auf `main` deployt automatisch über Vercel.
+Läuft über GitHub Pages. Jeder Push auf `main` geht automatisch live.
 
-## Vor dem öffentlichen Start
+Aktuell erreichbar unter <https://floyet89.github.io/avg-landing/>.
 
-1. Platzhalter `[…]` in `impressum.html` und `datenschutz.html` durch die echten Angaben ersetzen.
-2. Auftragsverarbeitungsvertrag mit Vercel prüfen (Abschnitt 4 der Datenschutzerklärung).
-3. Domain in Vercel verbinden.
+## Offen
+
+1. E-Mail-Adresse im Impressum-Overlay eintragen (aktuell Platzhalter).
+2. Domain `www.ambulante-versorgungsgemeinschaft.de` per DNS auf GitHub Pages zeigen
+   lassen, dann in den Repo-Settings als Custom Domain eintragen.
+3. Danach `og:url` und `og:image` in `index.html` auf die echte Domain umstellen.
 
 ## Datenschutz
 
