@@ -1,0 +1,82 @@
+:root{
+  --navy-950:#0A1220;
+  --navy-900:#0C1526;
+  --navy-600:#2C4670;
+  --green:#7F9E7F;
+  --cream:#F2EFE8;
+  --dim:#7B8AA5;
+  --rule:#1B2A45;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+
+body{
+  min-height:100dvh;display:flex;flex-direction:column;
+  background:var(--navy-900);color:#D4DCE9;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+
+.bar{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:22px clamp(18px,5vw,44px);
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  border-bottom:1px solid var(--rule);
+}
+.bar.foot{border-bottom:0;border-top:1px solid var(--rule);margin-top:auto;justify-content:flex-end}
+.bar a{color:inherit;text-decoration:none}
+.bar a:hover{color:var(--cream)}
+.back{letter-spacing:.18em}
+
+main{
+  width:min(760px,100%);margin:0 auto;
+  padding:clamp(38px,7vw,76px) clamp(18px,5vw,44px) clamp(50px,8vw,90px);
+}
+
+h1{
+  font-size:clamp(28px,5.5vw,42px);font-weight:700;line-height:1.15;
+  color:var(--cream);letter-spacing:-.015em;
+}
+.lede{color:var(--dim);margin-top:10px;font-size:15px}
+
+h2{
+  font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin:44px 0 12px;
+}
+
+p+p{margin-top:14px}
+
+a{color:#9FB6DC}
+a:hover{color:var(--cream)}
+
+code{
+  font-family:ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,monospace;
+  font-size:.9em;background:#182742;padding:1px 5px;border-radius:3px;
+}
+
+.ph{
+  display:inline-block;background:#1D2E4D;color:#93A8CB;
+  border:1px dashed #3E5580;
+  padding:1px 8px;border-radius:3px;
+  font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.85em;
+}
+
+.todo{
+  margin-top:30px;padding:18px 20px;
+  background:#1A2135;border-left:3px solid #C9A227;
+  font-size:14.5px;line-height:1.65;color:#DCD3B8;
+}
+.todo strong{color:#F0DFA8;display:block;margin-bottom:4px}
+
+.note{
+  font-size:14px;color:var(--dim);border-left:2px solid var(--rule);padding-left:14px;
+}
+
+ul{margin:12px 0 0 20px}
+li+li{margin-top:8px}
+
+table{border-collapse:collapse;width:100%;margin-top:14px;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase}

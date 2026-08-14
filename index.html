@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ambulante Versorgungsgemeinschaft</title>
+<meta name="description" content="10. September 2026, Berlin.">
+<meta name="theme-color" content="#0C1526">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Ambulante Versorgungsgemeinschaft">
+<meta property="og:description" content="10. September 2026, Berlin.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://www.ambulante-versorgungsgemeinschaft.de/">
+<meta property="og:image" content="https://www.ambulante-versorgungsgemeinschaft.de/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --navy-950:#0A1220;
+    --navy-900:#0C1526;
+    --navy-800:#132038;
+    --navy-700:#1E3050;
+    --navy-600:#2C4670;
+    --steel:#6E86AE;
+    --green:#7F9E7F;
+    --cream:#F2EFE8;
+    --dim:#7B8AA5;
+    --rule:#1B2A45;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  html{-webkit-text-size-adjust:100%}
+
+  body{
+    min-height:100dvh;
+    background:var(--navy-900);
+    color:var(--cream);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    display:flex;flex-direction:column;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Vignette + Papierkorn, komplett lokal */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse 90% 70% at 50% 42%, #16253E 0%, var(--navy-900) 55%, var(--navy-950) 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .meta{
+    position:relative;z-index:2;
+    display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding:clamp(16px,3vw,30px) clamp(16px,4vw,44px);
+    font-size:clamp(8.5px,1.05vw,10.5px);
+    letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  }
+  .meta a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+  .meta a:hover,.meta a:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
+  footer.meta{border-top:1px solid var(--rule);margin-top:auto}
+  footer.meta .left{max-width:62ch}
+
+  .egg{cursor:pointer;transition:color .25s}
+  .egg:hover{color:var(--steel)}
+
+  main{
+    position:relative;z-index:2;
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:clamp(22px,4.2vh,44px);
+    padding:clamp(20px,5vh,56px) 20px;
+    text-align:center;
+  }
+
+  /* ---------- Kompass ---------- */
+  .mark{width:clamp(132px,20vh,196px);height:auto;display:block;overflow:visible}
+  .needle{transform-origin:100px 100px;animation:seek 9s ease-in-out infinite;cursor:pointer}
+  .needle:hover .n-r{fill:#5A7FB8}
+  @keyframes seek{
+    0%,100%{transform:rotate(37deg)}
+    28%{transform:rotate(43deg)}
+    54%{transform:rotate(34.5deg)}
+    76%{transform:rotate(40deg)}
+  }
+  .needle.spin{animation:spin 1.5s cubic-bezier(.14,.72,.16,1) 1 forwards}
+  @keyframes spin{
+    from{transform:rotate(37deg)}
+    to{transform:rotate(1117deg)}
+  }
+  .plus-halo{transform-origin:100px 36px;animation:pulse 4.5s ease-in-out infinite}
+  @keyframes pulse{
+    0%,100%{opacity:.16;transform:scale(1)}
+    50%{opacity:0;transform:scale(1.75)}
+  }
+
+  /* ---------- Wortmarke ---------- */
+  .wordmark{
+    line-height:1.06;letter-spacing:-.012em;
+    font-size:clamp(25px,5.6vw,50px);
+  }
+  .wordmark .thin{display:block;font-weight:300;color:#C9D2E2}
+  .wordmark .bold{display:block;font-weight:700;color:var(--cream)}
+
+  /* ---------- Countdown ---------- */
+  .label{
+    font-size:clamp(8.5px,1.15vw,10.5px);letter-spacing:.42em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:clamp(12px,2vh,20px);
+  }
+  .clock{display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,2.6vw,30px)}
+  .unit{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:clamp(50px,9vw,86px)}
+  .unit .num{
+    font-family:ui-monospace,"Cascadia Mono","Segoe UI Mono","Roboto Mono",Menlo,Consolas,monospace;
+    font-size:clamp(34px,8.2vw,74px);font-weight:400;
+    letter-spacing:.02em;line-height:1;color:var(--cream);
+    font-variant-numeric:tabular-nums;
+  }
+  .unit .cap{
+    font-size:clamp(7.5px,1vw,9.5px);letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
+  }
+  .sep{
+    font-family:ui-monospace,monospace;
+    font-size:clamp(28px,6.4vw,58px);line-height:1.05;color:var(--navy-600);
+    align-self:flex-start;
+  }
+  .done{
+    font-family:ui-monospace,monospace;letter-spacing:.34em;text-transform:uppercase;
+    font-size:clamp(15px,3.4vw,30px);color:var(--green);
+  }
+
+  /* ---------- Overlays ---------- */
+  .veil{
+    position:fixed;inset:0;z-index:20;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    background:#060B14E6;
+    opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s;
+  }
+  .veil.on{opacity:1;visibility:visible}
+  .veil .close{
+    position:absolute;top:18px;right:20px;
+    background:none;border:0;color:var(--dim);cursor:pointer;font:inherit;
+    font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:8px;
+  }
+  .veil .close:hover{color:var(--cream)}
+
+  /* Geschwärzte Akte */
+  .akte{
+    width:min(660px,100%);background:var(--cream);color:#1A1A18;
+    padding:clamp(26px,5vw,52px);
+    font-family:Georgia,"Times New Roman",serif;font-size:clamp(14px,2.2vw,17px);line-height:2.1;
+    box-shadow:0 30px 90px #0009;
+    transform:translateY(14px) scale(.985);transition:transform .5s cubic-bezier(.2,.8,.25,1);
+    max-height:86vh;overflow-y:auto;
+  }
+  .veil.on .akte{transform:none}
+  .akte .head{
+    display:flex;justify-content:space-between;gap:14px;
+    font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:#6B6B63;border-bottom:1px solid #CFC9BB;padding-bottom:12px;margin-bottom:clamp(20px,3.4vw,32px);line-height:1.6;
+  }
+  .akte .foot{
+    font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:#8C8579;border-top:1px solid #CFC9BB;padding-top:12px;margin-top:clamp(20px,3.4vw,32px);line-height:1.6;
+  }
+  .akte p+p{margin-top:1.1em}
+  .rd{
+    display:inline-block;position:relative;cursor:pointer;
+    background:#12120F;color:transparent;border-radius:1px;
+    padding:0 .28em;user-select:none;transition:background .45s ease,color .45s ease;
+  }
+  .rd:hover{background:#2E2E27}
+  .rd.open{background:transparent;color:#1A1A18;cursor:default}
+
+  /* Wartemarke */
+  .ticket{
+    width:min(430px,100%);background:var(--cream);color:#1A1A18;
+    padding:clamp(24px,5vw,38px) clamp(20px,4vw,34px) clamp(18px,3vw,26px);
+    text-align:center;box-shadow:0 30px 90px #0009;
+    transform:translateY(-40px);transition:transform .6s cubic-bezier(.2,.9,.25,1);
+    position:relative;
+  }
+  .veil.on .ticket{transform:none}
+  .ticket::before,.ticket::after{
+    content:"";position:absolute;top:50%;width:26px;height:26px;
+    background:var(--navy-950);border-radius:50%;transform:translateY(-50%);
+  }
+  .ticket::before{left:-13px}
+  .ticket::after{right:-13px}
+  .ticket .t-top{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#7A736A}
+  .ticket .t-nr{font-family:Georgia,"Times New Roman",serif;font-size:clamp(52px,13vw,76px);line-height:1.1;color:#A8322A;margin:.1em 0 .16em}
+  .ticket .t-sub{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#7A736A}
+  .ticket .t-cd{font-family:ui-monospace,monospace;font-size:clamp(12px,2.9vw,15px);letter-spacing:.13em;margin:.85em 0 .3em;color:#1A1A18}
+  .ticket .t-date{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:#7A736A}
+  .ticket .code{
+    display:flex;gap:2px;justify-content:center;align-items:flex-end;height:38px;margin-top:20px;
+    border-top:1px dashed #C6BFB1;padding-top:18px;
+  }
+  .ticket .code i{display:block;background:#1A1A18;width:2px;height:100%}
+
+  @media (max-width:560px){
+    .clock{gap:6px}
+    .sep{display:none}
+    .unit{min-width:0;flex:1}
+    footer.meta{flex-direction:column;align-items:flex-start;gap:7px}
+    .akte{line-height:1.95}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .needle,.plus-halo{animation:none}
+    .needle{transform:rotate(37deg)}
+    *{transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<header class="meta">
+  <span>Ambulante Versorgungsgemeinschaft</span>
+  <span>i.&nbsp;Gr.</span>
+</header>
+
+<main>
+
+  <svg class="mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo der Ambulanten Versorgungsgemeinschaft: ein Kompass, dessen Ring die Buchstaben A, V und G sowie ein grünes Pluszeichen trägt.">
+    <g fill="none" stroke="#456394" stroke-width="11" stroke-linecap="round">
+      <path d="M126.03 41.53 A64 64 0 0 1 161.20 81.29"/>
+      <path d="M161.20 118.71 A64 64 0 0 1 118.71 161.20"/>
+      <path d="M81.29 161.20 A64 64 0 0 1 38.80 118.71"/>
+      <path d="M38.80 81.29 A64 64 0 0 1 73.97 41.53"/>
+    </g>
+
+    <g font-family="system-ui,-apple-system,'Segoe UI',Arial,sans-serif" font-weight="600"
+       font-size="30" fill="#456394" text-anchor="middle" dominant-baseline="central">
+      <text x="33" y="101">A</text>
+      <text x="167" y="101">G</text>
+      <text x="100" y="168">V</text>
+    </g>
+
+    <circle class="plus-halo" cx="100" cy="36" r="17" fill="#7F9E7F"/>
+    <circle cx="100" cy="36" r="17" fill="#7F9E7F"/>
+    <path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#F2EFE8" stroke-width="4.6" stroke-linecap="round"/>
+
+    <g class="needle" id="needle" tabindex="0" role="button"
+       aria-label="Kompassnadel — anklicken">
+      <path class="n-l" d="M100 38 L81 106 L100 162 Z" fill="#A9BCDC"/>
+      <path class="n-r" d="M100 38 L119 106 L100 162 Z" fill="#38578A"/>
+    </g>
+  </svg>
+
+  <h1 class="wordmark">
+    <span class="thin">Ambulante</span>
+    <span class="bold">Versorgungs&shy;gemeinschaft</span>
+  </h1>
+
+  <div>
+    <div class="label" id="cdLabel">Bis zur Bekanntgabe</div>
+    <div class="clock" id="clock" role="timer" aria-live="off">
+      <div class="unit"><span class="num" id="d">--</span><span class="cap">Tage</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="h">--</span><span class="cap">Std</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="m">--</span><span class="cap">Min</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="s">--</span><span class="cap">Sek</span></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="meta">
+  <span class="left">10.–11. September 2026 · <span class="egg" id="egg47" role="button" tabindex="0" title="47">47.</span> Hausärztinnen- und Hausärztetag · Berlin</span>
+  <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></span>
+</footer>
+
+<!-- Easteregg 1: die geschwärzte Akte -->
+<div class="veil" id="veilAkte" role="dialog" aria-modal="true" aria-label="Vertrauliches Dokument">
+  <button class="close" data-close>Schließen</button>
+  <div class="akte">
+    <div class="head"><span>Ambulante Versorgungsgemeinschaft</span><span>Vertraulich</span></div>
+    <p>Die <span class="rd">Gemeinschaft</span> zur Entlastung der <span class="rd">Hausarztpraxen</span> wird am <span class="rd">10.09.2026</span> erstmals vorgestellt.</p>
+    <p>Alle <span class="rd">weiteren Angaben</span> sind bis dahin unter Verschluss zu halten.</p>
+    <p>Ort der Bekanntgabe: <span class="rd">Hausärztetag</span>, Berlin.</p>
+    <div class="foot">Freigabe in <span id="akteCd">--:--:--:--</span></div>
+  </div>
+</div>
+
+<!-- Easteregg 2: die Wartemarke -->
+<div class="veil" id="veilTicket" role="dialog" aria-modal="true" aria-label="Wartemarke Nummer 47">
+  <button class="close" data-close>Schließen</button>
+  <div class="ticket">
+    <div class="t-top">Bitte ziehen Sie eine Nummer</div>
+    <div class="t-nr">Nr. 47</div>
+    <div class="t-sub">Ihr Aufruf erfolgt in</div>
+    <div class="t-cd" id="ticketCd">--&nbsp;Tage · --&nbsp;Std · --&nbsp;Min · --&nbsp;Sek</div>
+    <div class="t-date">10.09.2026 · 09:00 Uhr</div>
+    <div class="code" id="barcode"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Bekanntgabe: 10. September 2026, 09:00 Uhr MESZ
+  var TARGET = new Date("2026-09-10T09:00:00+02:00").getTime();
+
+  var el = function(id){ return document.getElementById(id); };
+  var pad = function(n){ return String(n).padStart(2,"0"); };
+
+  var d=el("d"), h=el("h"), m=el("m"), s=el("s");
+  var clock=el("clock"), label=el("cdLabel");
+  var akteCd=el("akteCd"), ticketCd=el("ticketCd");
+  var over=false;
+
+  function tick(){
+    var left = TARGET - Date.now();
+
+    if(left<=0){
+      if(!over){
+        over=true;
+        clock.innerHTML='<div class="done">Jetzt</div>';
+        label.textContent="Bekanntgabe";
+      }
+      akteCd.textContent="00:00:00:00";
+      ticketCd.textContent="Sie sind an der Reihe";
+      return;
+    }
+
+    var sec=Math.floor(left/1000);
+    var dd=Math.floor(sec/86400),
+        hh=Math.floor(sec%86400/3600),
+        mm=Math.floor(sec%3600/60),
+        ss=sec%60;
+
+    d.textContent=pad(dd); h.textContent=pad(hh);
+    m.textContent=pad(mm); s.textContent=pad(ss);
+
+    akteCd.textContent=pad(dd)+":"+pad(hh)+":"+pad(mm)+":"+pad(ss);
+    ticketCd.innerHTML=dd+" Tage · "+pad(hh)+" Std · "+pad(mm)+" Min · "+pad(ss)+" Sek";
+  }
+  tick();
+  setInterval(tick,1000);
+
+  /* ---------- Overlays ---------- */
+  function open(v){
+    v.classList.add("on");
+    document.body.style.overflow="hidden";
+    v.querySelector("[data-close]").focus();
+  }
+  function shut(v){
+    v.classList.remove("on");
+    document.body.style.overflow="";
+  }
+  document.querySelectorAll(".veil").forEach(function(v){
+    v.addEventListener("click",function(e){
+      if(e.target===v || e.target.hasAttribute("data-close")) shut(v);
+    });
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape") document.querySelectorAll(".veil.on").forEach(shut);
+  });
+
+  /* ---------- Easteregg 1: Nadel anklicken -> geschwärzte Akte ---------- */
+  var needle=el("needle"), veilAkte=el("veilAkte");
+
+  function spin(){
+    needle.classList.remove("spin");
+    void needle.getBoundingClientRect();
+    needle.classList.add("spin");
+    setTimeout(function(){ open(veilAkte); },820);
+    setTimeout(function(){ needle.classList.remove("spin"); },1700);
+  }
+  needle.addEventListener("click",spin);
+  needle.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); spin(); }
+  });
+
+  // Schwärzungen einzeln aufdecken
+  document.querySelectorAll(".rd").forEach(function(r){
+    r.addEventListener("click",function(){ r.classList.add("open"); });
+  });
+
+  /* ---------- Easteregg 2: "47" tippen oder im Footer antippen ---------- */
+  var veilTicket=el("veilTicket");
+
+  // Barcode einmalig, deterministisch aus "AVG47"
+  (function(){
+    var bar=el("barcode"), seed=4711, html="";
+    for(var i=0;i<58;i++){
+      seed=(seed*1103515245+12345)%2147483648;
+      var w=1+(seed>>16)%3, hgt=55+(seed>>8)%45;
+      html+='<i style="width:'+w+'px;height:'+hgt+'%"></i>';
+    }
+    bar.innerHTML=html;
+  })();
+
+  function ticket(){ open(veilTicket); }
+
+  var eggBtn=el("egg47");
+  eggBtn.addEventListener("click",ticket);
+  eggBtn.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); ticket(); }
+  });
+
+  var typed="";
+  document.addEventListener("keydown",function(e){
+    if(e.key.length!==1) return;
+    typed=(typed+e.key).slice(-2);
+    if(typed==="47"){ typed=""; ticket(); }
+  });
+
+  console.log("%cAmbulante Versorgungsgemeinschaft","color:#7F9E7F;font:600 14px system-ui");
+  console.log("%cDie Nadel weiß mehr. Und 47 ist keine zufällige Zahl.","color:#6E86AE;font:12px ui-monospace,monospace");
+})();
+</script>
+
+</body>
+</html>
