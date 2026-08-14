@@ -6,7 +6,7 @@
 <title>Ambulante Versorgungsgemeinschaft</title>
 <meta name="description" content="10. September 2026, Berlin.">
 <meta name="theme-color" content="#0C1526">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Ambulante Versorgungsgemeinschaft">
 <meta property="og:description" content="10. September 2026, Berlin.">
 <meta property="og:type" content="website">
@@ -64,8 +64,15 @@
   }
   .meta a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
   .meta a:hover,.meta a:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
-  footer.meta{border-top:1px solid var(--rule);margin-top:auto}
-  footer.meta .left{max-width:62ch}
+  footer.meta{border-top:1px solid var(--rule);margin-top:auto;gap:26px}
+  footer .ev{line-height:1.5}
+  @media (min-width:861px){ footer .ev{white-space:nowrap} }
+  .imp-btn{
+    background:none;border:0;padding:0;cursor:pointer;color:inherit;
+    font:inherit;font-size:inherit;letter-spacing:.24em;text-transform:uppercase;
+    border-bottom:1px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap;
+  }
+  .imp-btn:hover,.imp-btn:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
 
   .egg{cursor:pointer;transition:color .25s}
   .egg:hover{color:var(--steel)}
@@ -79,7 +86,7 @@
   }
 
   /* ---------- Kompass ---------- */
-  .mark{width:clamp(132px,20vh,196px);height:auto;display:block;overflow:visible}
+  .mark{width:clamp(172px,27vh,268px);height:auto;display:block;overflow:visible}
   .needle{transform-origin:100px 100px;animation:seek 9s ease-in-out infinite;cursor:pointer}
   .needle:hover .n-r{fill:#5A7FB8}
   @keyframes seek{
@@ -147,6 +154,33 @@
     font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:8px;
   }
   .veil .close:hover{color:var(--cream)}
+
+  /* Impressum-Panel */
+  .panel{
+    width:min(560px,100%);background:#101C31;border:1px solid #24375A;
+    padding:clamp(28px,5vw,46px);
+    transform:translateY(14px);transition:transform .5s cubic-bezier(.2,.8,.25,1);
+    max-height:86vh;overflow-y:auto;text-align:left;
+  }
+  .veil.on .panel{transform:none}
+  .panel h2{
+    font-size:11px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--green);margin-bottom:26px;
+  }
+  .panel dl{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:14px 22px;font-size:14px;line-height:1.6}
+  .panel dt{
+    font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+    padding-top:4px;
+  }
+  .panel dd{color:#D4DCE9}
+  .panel .fine{
+    margin-top:26px;padding-top:18px;border-top:1px solid #1E3050;
+    font-size:12.5px;line-height:1.7;color:var(--dim);
+  }
+  .ph{
+    display:inline-block;border-bottom:1px dashed #4A5F85;color:#93A8CB;
+    font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.9em;
+  }
 
   /* Geschwärzte Akte */
   .akte{
@@ -273,9 +307,35 @@
 </main>
 
 <footer class="meta">
-  <span class="left">10.–11. September 2026 · <span class="egg" id="egg47" role="button" tabindex="0" title="47">47.</span> Hausärztinnen- und Hausärztetag · Berlin</span>
-  <span><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></span>
+  <div class="ev">10.–11. September 2026 · <span class="egg" id="egg47" role="button" tabindex="0" title="47">47.</span> Hausärztinnen- und Hausärztetag · Berlin</div>
+  <button class="imp-btn" id="impBtn">Impressum</button>
 </footer>
+
+<!-- Impressum -->
+<div class="veil" id="veilImp" role="dialog" aria-modal="true" aria-labelledby="impH">
+  <button class="close" data-close>Schließen</button>
+  <div class="panel">
+    <h2 id="impH">Impressum</h2>
+    <dl>
+      <dt>Anbieter</dt>
+      <dd>AVG Ambulante Versorgungsgemeinschaft GmbH i.&nbsp;Gr.<br>Ernst-Haeckel-Platz 5/6, 07745 Jena</dd>
+
+      <dt>Geschäftsführer</dt>
+      <dd>Christian Schmitz, Florian Bontrup</dd>
+
+      <dt>Register</dt>
+      <dd>Eintragung ins Handelsregister beantragt.</dd>
+
+      <dt>Kontakt</dt>
+      <dd><span class="ph">[E-Mail-Adresse]</span></dd>
+    </dl>
+    <p class="fine">
+      Diese Seite setzt keine Cookies, misst nichts und lädt nichts von Dritten.
+      Beim Aufruf protokolliert der Hoster technisch notwendige Zugriffsdaten
+      (Art. 6 Abs. 1 lit. f DSGVO).
+    </p>
+  </div>
+</div>
 
 <!-- Easteregg 1: die geschwärzte Akte -->
 <div class="veil" id="veilAkte" role="dialog" aria-modal="true" aria-label="Vertrauliches Dokument">
@@ -406,6 +466,9 @@
   eggBtn.addEventListener("keydown",function(e){
     if(e.key==="Enter"||e.key===" "){ e.preventDefault(); ticket(); }
   });
+
+  /* ---------- Impressum ---------- */
+  el("impBtn").addEventListener("click",function(){ open(el("veilImp")); });
 
   var typed="";
   document.addEventListener("keydown",function(e){
