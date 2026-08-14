@@ -74,9 +74,6 @@
   }
   .imp-btn:hover,.imp-btn:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
 
-  .egg{cursor:pointer;transition:color .25s}
-  .egg:hover{color:var(--steel)}
-
   main{
     position:relative;z-index:2;
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -100,6 +97,7 @@
     from{transform:rotate(37deg)}
     to{transform:rotate(1117deg)}
   }
+  .plus{cursor:pointer}
   .plus-halo{transform-origin:100px 36px;animation:pulse 4.5s ease-in-out infinite}
   @keyframes pulse{
     0%,100%{opacity:.16;transform:scale(1)}
@@ -207,6 +205,8 @@
   }
   .rd:hover{background:#2E2E27}
   .rd.open{background:transparent;color:#1A1A18;cursor:default}
+  .rd.locked{cursor:default}
+  .rd.locked:hover{background:#12120F}
 
   /* Wartemarke */
   .ticket{
@@ -273,9 +273,11 @@
       <text x="100" y="168">V</text>
     </g>
 
-    <circle class="plus-halo" cx="100" cy="36" r="17" fill="#7F9E7F"/>
-    <circle cx="100" cy="36" r="17" fill="#7F9E7F"/>
-    <path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#F2EFE8" stroke-width="4.6" stroke-linecap="round"/>
+    <g class="plus" id="eggPlus" tabindex="0" role="button" aria-label="Pluszeichen im Signet — anklicken">
+      <circle class="plus-halo" cx="100" cy="36" r="17" fill="#7F9E7F"/>
+      <circle cx="100" cy="36" r="17" fill="#7F9E7F"/>
+      <path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#F2EFE8" stroke-width="4.6" stroke-linecap="round"/>
+    </g>
 
     <g class="needle" id="needle" tabindex="0" role="button"
        aria-label="Kompassnadel — anklicken">
@@ -290,7 +292,6 @@
   </h1>
 
   <div>
-    <div class="label" id="cdLabel">Bis zur Bekanntgabe</div>
     <div class="clock" id="clock" role="timer" aria-live="off">
       <div class="unit"><span class="num" id="d">--</span><span class="cap">Tage</span></div>
       <span class="sep">:</span>
@@ -305,7 +306,7 @@
 </main>
 
 <footer class="meta">
-  <div class="ev">10.–11. September 2026 · <span class="egg" id="egg47" role="button" tabindex="0" title="47">47.</span> Hausärztinnen- und Hausärztetag · Berlin</div>
+  <div class="ev">10. September 2026 · Berlin</div>
   <button class="imp-btn" id="impBtn">Impressum</button>
 </footer>
 
@@ -343,9 +344,9 @@
   <button class="close" data-close>Schließen</button>
   <div class="akte">
     <div class="head"><span>Ambulante Versorgungsgemeinschaft</span><span>Vertraulich</span></div>
-    <p>Die <span class="rd">Gemeinschaft</span> zur Entlastung der <span class="rd">Hausarztpraxen</span> wird am <span class="rd">10.09.2026</span> erstmals vorgestellt.</p>
+    <p>Die <span class="rd">Gemeinschaft</span> zur Entlastung der <span class="rd">ambulanten Versorgung</span> wird am <span class="rd">10.09.2026</span> erstmals vorgestellt.</p>
     <p>Alle <span class="rd">weiteren Angaben</span> sind bis dahin unter Verschluss zu halten.</p>
-    <p>Ort der Bekanntgabe: <span class="rd">Hausärztetag</span>, Berlin.</p>
+    <p>Ort der Bekanntgabe: <span class="rd locked">Hausärztetag</span>, Berlin.</p>
     <div class="foot">Freigabe in <span id="akteCd">--:--:--:--</span></div>
   </div>
 </div>
@@ -374,7 +375,7 @@
   var pad = function(n){ return String(n).padStart(2,"0"); };
 
   var d=el("d"), h=el("h"), m=el("m"), s=el("s");
-  var clock=el("clock"), label=el("cdLabel");
+  var clock=el("clock");
   var akteCd=el("akteCd"), ticketCd=el("ticketCd");
   var over=false;
 
@@ -385,7 +386,6 @@
       if(!over){
         over=true;
         clock.innerHTML='<div class="done">Jetzt</div>';
-        label.textContent="Bekanntgabe";
       }
       akteCd.textContent="00:00:00:00";
       ticketCd.textContent="Sie sind an der Reihe";
@@ -441,8 +441,8 @@
     if(e.key==="Enter"||e.key===" "){ e.preventDefault(); spin(); }
   });
 
-  // Schwärzungen einzeln aufdecken
-  document.querySelectorAll(".rd").forEach(function(r){
+  // Schwärzungen einzeln aufdecken. "locked" bleibt schwarz.
+  document.querySelectorAll(".rd:not(.locked)").forEach(function(r){
     r.addEventListener("click",function(){ r.classList.add("open"); });
   });
 
@@ -462,9 +462,9 @@
 
   function ticket(){ open(veilTicket); }
 
-  var eggBtn=el("egg47");
-  eggBtn.addEventListener("click",ticket);
-  eggBtn.addEventListener("keydown",function(e){
+  var eggPlus=el("eggPlus");
+  eggPlus.addEventListener("click",ticket);
+  eggPlus.addEventListener("keydown",function(e){
     if(e.key==="Enter"||e.key===" "){ e.preventDefault(); ticket(); }
   });
 

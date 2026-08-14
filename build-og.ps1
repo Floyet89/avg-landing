@@ -83,11 +83,6 @@ $bDate = New-Object System.Drawing.SolidBrush((C "#8FA3C4"))
 $dot = [char]0x00B7
 $g.DrawString("10. SEPTEMBER 2026  $dot  BERLIN", $fDate, $bDate, $x, 456)
 
-# --- Fusszeile ---
-$fFoot = New-Object System.Drawing.Font("Consolas", 18, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
-$bFoot = New-Object System.Drawing.SolidBrush((C "#5A6C8A"))
-$g.DrawString("BIS ZUR BEKANNTGABE", $fFoot, $bFoot, 74, 548)
-
 $out = Join-Path $PSScriptRoot "og.png"
 $bmp.Save($out, [System.Drawing.Imaging.ImageFormat]::Png)
 $g.Dispose(); $bmp.Dispose()

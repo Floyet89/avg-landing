@@ -51,9 +51,9 @@ Content-Security-Policy in `vercel.json` erzwingt das technisch.
 Zwei Stück, beide greifen Motive aus dem Storyboard auf:
 
 1. **Klick auf die Kompassnadel** — sie dreht durch, danach erscheint die geschwärzte
-   Akte. Die einzelnen Schwärzungen lassen sich anklicken und geben nacheinander den
-   Text frei.
-2. **„47." in der Fußzeile antippen** oder einfach **`47` tippen** — es kommt eine
+   Akte. Die Schwärzungen lassen sich einzeln anklicken und geben den Text frei. Eine
+   bleibt absichtlich schwarz: der Ort der Bekanntgabe.
+2. **Klick auf das grüne Plus im Signet** oder einfach **`47` tippen** — es kommt eine
    Wartemarke mit dem laufenden Countdown als Aufrufzeit.
 
 Dazu eine Nachricht in der Browser-Konsole für alle, die dort nachsehen.
