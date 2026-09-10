@@ -156,7 +156,8 @@
   .inhalt{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.25,1)}
   body.p-fertig .inhalt{opacity:1;transform:none}
   body:not(.p-fertig) .inhalt{pointer-events:none}
-  body:not(.p-fertig) footer.meta{opacity:0;pointer-events:none}
+  /* Die Fusszeile bleibt in jeder Phase sichtbar: das Impressum muss nach
+     § 5 DDG staendig erreichbar sein, auch waehrend der Countdown laeuft. */
 
   .blitz{position:fixed;inset:0;z-index:4;pointer-events:none;background:#A8C5A8;opacity:0;mix-blend-mode:screen}
   body.p-schluss .blitz{animation:blitzen 1.2s ease-out 2.4s}
