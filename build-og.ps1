@@ -78,10 +78,11 @@ $g.DrawString("gemeinschaft",   $fBold, $bBold, ($x - 4), 324)
 $penRule = New-Object System.Drawing.Pen((C "#2C4670"), 2)
 $g.DrawLine($penRule, $x, 428, ($x + 300), 428)
 
-$fDate = New-Object System.Drawing.Font("Consolas", 25, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+$fDate = New-Object System.Drawing.Font("Consolas", 21, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
 $bDate = New-Object System.Drawing.SolidBrush((C "#8FA3C4"))
 $dot = [char]0x00B7
-$g.DrawString("10. SEPTEMBER 2026  $dot  BERLIN", $fDate, $bDate, $x, 456)
+$ae = [char]0x00C4
+$g.DrawString("GEMEINSAM AN DER PRIM" + $ae + "RVERSORGUNG", $fDate, $bDate, $x, 456)
 
 $out = Join-Path $PSScriptRoot "og.png"
 $bmp.Save($out, [System.Drawing.Imaging.ImageFormat]::Png)

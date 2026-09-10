@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ambulante Versorgungsgemeinschaft</title>
-<meta name="description" content="10. September 2026, Berlin.">
+<meta name="description" content="Wir bauen gemeinsam an der Primärversorgung von morgen.">
 <meta name="theme-color" content="#0C1526">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Ambulante Versorgungsgemeinschaft">
-<meta property="og:description" content="10. September 2026, Berlin.">
+<meta property="og:description" content="Wir bauen gemeinsam an der Primärversorgung von morgen.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
 <meta property="og:url" content="https://www.ambulante-versorgungsgemeinschaft.de/">
@@ -20,18 +20,19 @@
   :root{
     --navy-950:#0A1220;
     --navy-900:#0C1526;
-    --navy-800:#132038;
     --navy-700:#1E3050;
     --navy-600:#2C4670;
     --steel:#6E86AE;
     --green:#7F9E7F;
+    --green-hell:#A8C5A8;
     --cream:#F2EFE8;
     --dim:#7B8AA5;
     --rule:#1B2A45;
+    --card:#101C31;
+    --card-line:#22334F;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
-
   html{-webkit-text-size-adjust:100%}
 
   body{
@@ -40,33 +41,28 @@
     color:var(--cream);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     display:flex;flex-direction:column;
-    overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
+  body.laeuft{overflow:hidden;height:100dvh}
 
-  /* Vignette + Papierkorn, komplett lokal */
   body::before{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(ellipse 90% 70% at 50% 42%, #16253E 0%, var(--navy-900) 55%, var(--navy-950) 100%);
+    background:radial-gradient(ellipse 100% 62% at 50% 34%, #17273F 0%, var(--navy-900) 55%, var(--navy-950) 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
-    opacity:.05;mix-blend-mode:overlay;
+    opacity:.045;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   .meta{
-    position:relative;z-index:2;
-    display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-    padding:clamp(16px,3vw,30px) clamp(16px,4vw,44px);
+    position:relative;z-index:3;
+    display:flex;align-items:baseline;justify-content:space-between;gap:26px;
+    padding:clamp(16px,3vw,28px) clamp(18px,4vw,52px);
     font-size:clamp(8.5px,1.05vw,10.5px);
     letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
   }
-  .meta a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
-  .meta a:hover,.meta a:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
-  footer.meta{border-top:1px solid var(--rule);margin-top:auto;gap:26px}
-  footer .ev{line-height:1.5}
-  @media (min-width:861px){ footer .ev{white-space:nowrap} }
+  footer.meta{border-top:1px solid var(--rule);margin-top:auto;transition:opacity .8s ease}
   .imp-btn{
     background:none;border:0;padding:0;cursor:pointer;color:inherit;
     font:inherit;font-size:inherit;letter-spacing:.24em;text-transform:uppercase;
@@ -74,147 +70,201 @@
   }
   .imp-btn:hover,.imp-btn:focus-visible{color:var(--cream);border-bottom-color:var(--navy-600)}
 
-  main{
-    position:relative;z-index:2;
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:clamp(22px,4.2vh,44px);
-    padding:clamp(20px,5vh,56px) 20px;
-    text-align:center;
+  main{position:relative;z-index:2;flex:1;width:min(1180px,100%);margin:0 auto;padding:0 clamp(18px,4vw,52px)}
+
+  /* ============================== Bühne ============================== */
+  .buehne{
+    min-height:calc(100dvh - 150px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:clamp(24px,4.5vh,46px);
+    padding:clamp(24px,5vh,50px) 0;
   }
 
-  /* ---------- Kompass ---------- */
-  .mark{width:clamp(172px,27vh,268px);height:auto;display:block;overflow:visible}
-  .needle{transform-origin:100px 100px;animation:seek 9s ease-in-out infinite;cursor:pointer}
-  .needle:hover .n-r{fill:#5A7FB8}
-  @keyframes seek{
+  .mark{width:clamp(150px,22vh,230px);height:auto;display:block;overflow:visible}
+  .needle{transform-origin:100px 100px;transform:rotate(37deg);animation:suchen 9s ease-in-out infinite}
+  @keyframes suchen{
     0%,100%{transform:rotate(37deg)}
     28%{transform:rotate(43deg)}
     54%{transform:rotate(34.5deg)}
     76%{transform:rotate(40deg)}
   }
-  .needle.spin{animation:spin 1.5s cubic-bezier(.14,.72,.16,1) 1 forwards}
-  @keyframes spin{
-    from{transform:rotate(37deg)}
-    to{transform:rotate(1117deg)}
+
+  /* Erst trudeln, dann einrasten: vier Umdrehungen mit kleinem Überschwinger. */
+  .needle.dreht{animation:nadelDreht 2.9s linear forwards}
+  @keyframes nadelDreht{
+    0%  {transform:rotate(37deg)}
+    7%  {transform:rotate(128deg)}
+    18% {transform:rotate(430deg)}
+    34% {transform:rotate(840deg)}
+    52% {transform:rotate(1150deg)}
+    70% {transform:rotate(1330deg)}
+    84% {transform:rotate(1418deg)}
+    92% {transform:rotate(1453deg)}
+    100%{transform:rotate(1440deg)}
   }
-  .plus{cursor:pointer}
-  .plus-halo{transform-origin:100px 36px;animation:pulse 4.5s ease-in-out infinite}
-  @keyframes pulse{
+
+  .plus-gruppe{transform-origin:100px 36px}
+  .plus-halo{transform-origin:100px 36px;animation:atmen 4.5s ease-in-out infinite}
+  @keyframes atmen{
     0%,100%{opacity:.16;transform:scale(1)}
     50%{opacity:0;transform:scale(1.75)}
   }
+  body.p-fertig .plus-gruppe{cursor:pointer}
+  body.p-schluss .plus-gruppe{animation:plusPuls .9s ease-out 2.55s}
+  @keyframes plusPuls{ 0%{transform:scale(1)} 30%{transform:scale(1.32)} 100%{transform:scale(1)} }
 
-  /* ---------- Wortmarke ---------- */
-  .wordmark{
-    line-height:1.06;letter-spacing:-.012em;
-    font-size:clamp(25px,5.6vw,50px);
-  }
-  .wordmark .thin{display:block;font-weight:300;color:#C9D2E2}
-  .wordmark .bold{display:block;font-weight:700;color:var(--cream)}
-
-  /* ---------- Countdown ---------- */
-  .label{
-    font-size:clamp(8.5px,1.15vw,10.5px);letter-spacing:.42em;text-transform:uppercase;
-    color:var(--dim);margin-bottom:clamp(12px,2vh,20px);
-  }
-  .clock{display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,2.6vw,30px)}
-  .unit{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:clamp(50px,9vw,86px)}
-  .unit .num{
+  /* Uhr */
+  .uhr{display:flex;align-items:flex-start;justify-content:center;gap:clamp(10px,2.6vw,30px)}
+  .einheit{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:clamp(50px,9vw,86px)}
+  .zahl{
     font-family:ui-monospace,"Cascadia Mono","Segoe UI Mono","Roboto Mono",Menlo,Consolas,monospace;
-    font-size:clamp(34px,8.2vw,74px);font-weight:400;
-    letter-spacing:.02em;line-height:1;color:var(--cream);
-    font-variant-numeric:tabular-nums;
+    font-size:clamp(34px,8.2vw,74px);font-weight:400;letter-spacing:.02em;line-height:1;
+    color:var(--cream);font-variant-numeric:tabular-nums;
   }
-  .unit .cap{
-    font-size:clamp(7.5px,1vw,9.5px);letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
+  .zahl.tickt{animation:tick .5s ease-out}
+  @keyframes tick{
+    0%{transform:scale(1.2);color:var(--green-hell)}
+    100%{transform:scale(1);color:var(--cream)}
   }
-  .sep{
-    font-family:ui-monospace,monospace;
-    font-size:clamp(28px,6.4vw,58px);line-height:1.05;color:var(--navy-600);
-    align-self:flex-start;
-  }
-  .done{
-    font-family:ui-monospace,monospace;letter-spacing:.34em;text-transform:uppercase;
-    font-size:clamp(15px,3.4vw,30px);color:var(--green);
+  .kap{font-size:clamp(7.5px,1vw,9.5px);letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+  .doppel{
+    font-family:ui-monospace,monospace;font-size:clamp(28px,6.4vw,58px);line-height:1.05;
+    color:var(--navy-600);align-self:flex-start;
   }
 
-  /* ---------- Overlays ---------- */
+  /* Claim */
+  .claim{
+    font-size:clamp(24px,3.9vw,45px);font-weight:300;line-height:1.24;letter-spacing:-.018em;
+    color:#C9D2E2;max-width:24ch;text-wrap:balance;
+    opacity:0;transform:translateY(14px);
+  }
+  .claim em{font-style:normal;font-weight:700;color:var(--green-hell);letter-spacing:.03em;text-transform:uppercase}
+  .claim b{font-weight:700;color:var(--cream)}
+  .uhr,.claim{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.25,1)}
+
+  .weiter{
+    font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);
+    opacity:0;transition:opacity .8s ease;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+
+  body:not(.p-claim):not(.p-fertig) .claim{opacity:0;transform:translateY(14px);pointer-events:none}
+  body.p-claim .claim,body.p-fertig .claim{opacity:1;transform:none}
+  body.p-claim .uhr,body.p-fertig .uhr{opacity:0;transform:translateY(-10px);position:absolute;pointer-events:none}
+  body.p-fertig .weiter{opacity:1}
+
+  .inhalt{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.25,1)}
+  body.p-fertig .inhalt{opacity:1;transform:none}
+  body:not(.p-fertig) .inhalt{pointer-events:none}
+  body:not(.p-fertig) footer.meta{opacity:0;pointer-events:none}
+
+  .blitz{position:fixed;inset:0;z-index:4;pointer-events:none;background:#A8C5A8;opacity:0;mix-blend-mode:screen}
+  body.p-schluss .blitz{animation:blitzen 1.2s ease-out 2.4s}
+  @keyframes blitzen{ 0%{opacity:0} 22%{opacity:.13} 100%{opacity:0} }
+
+  /* ===================== Die Raute als Stilelement ===================== */
+  /* Dieselbe Silhouette wie die Kompassnadel. Ein Klick lässt sie drehen. */
+  .raute{
+    display:block;width:13px;height:23px;
+    background:var(--green);
+    clip-path:polygon(50% 0%, 100% 64%, 50% 100%, 0% 64%);
+    cursor:pointer;
+    transition:transform .9s cubic-bezier(.18,.75,.2,1), background .3s ease;
+  }
+  .raute:hover{background:var(--green-hell)}
+
+  /* ============================= Fragen ============================= */
+  .fragen{padding:clamp(40px,8vh,88px) 0 clamp(30px,5vh,54px)}
+  .fragen-kopf{
+    font-size:clamp(8.5px,1.05vw,10.5px);letter-spacing:.34em;text-transform:uppercase;
+    color:var(--green);margin-bottom:clamp(22px,3.6vh,34px);text-align:center;
+  }
+  .gitter{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.5vw,18px)}
+  @media (max-width:940px){ .gitter{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:620px){ .gitter{grid-template-columns:1fr} }
+
+  .kachel{
+    display:flex;flex-direction:column;
+    background:var(--card);border:1px solid var(--card-line);
+    padding:clamp(22px,2.3vw,30px);
+    transition:border-color .3s ease,background .3s ease,transform .3s ease;
+  }
+  .kachel:hover{border-color:#3A5480;background:#12203A;transform:translateY(-3px)}
+  .kachel:hover .glaube{color:var(--cream)}
+  .frage{font-size:clamp(16px,1.6vw,19px);line-height:1.38;color:var(--cream);letter-spacing:-.006em}
+  .antwortblock{margin-top:auto;padding-top:clamp(16px,2vw,22px)}
+  .antwortblock .raute{margin-bottom:14px}
+  .glaube{font-size:clamp(13.5px,1.35vw,15.5px);line-height:1.6;color:#9FB0CA;transition:color .3s ease}
+
+  .kachel-offen{border-color:#3A5480;background:#12203A;grid-column:span 2}
+  @media (max-width:620px){ .kachel-offen{grid-column:span 1} }
+  .mitmach{margin-top:auto;padding-top:clamp(16px,2vw,22px);display:flex;flex-direction:column;gap:12px}
+  .mitmach textarea{
+    width:100%;background:var(--navy-900);border:1px solid var(--card-line);border-radius:2px;
+    color:var(--cream);font:inherit;font-size:14px;line-height:1.5;padding:11px 13px;
+    resize:vertical;min-height:76px;transition:border-color .25s;
+  }
+  .mitmach textarea:focus{outline:none;border-color:var(--green)}
+  .mitmach textarea::placeholder{color:#63748F}
+  .mitmach button{
+    align-self:flex-start;background:var(--green);color:#0C1526;border:0;border-radius:2px;
+    font:inherit;font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+    padding:11px 20px;cursor:pointer;transition:background .25s;
+  }
+  .mitmach button:hover{background:var(--green-hell)}
+  .mitmach .hinweis{font-size:11px;line-height:1.5;color:var(--dim)}
+
+  .nachtrag{
+    text-align:center;padding:0 0 clamp(46px,8vh,86px);
+    font-size:clamp(13.5px,1.5vw,16px);line-height:1.75;color:var(--dim);
+  }
+  .koeder{
+    cursor:pointer;color:#9FB0CA;
+    border-bottom:1px dotted #3A5480;transition:color .25s,border-color .25s;
+  }
+  .koeder:hover{color:var(--cream);border-bottom-color:var(--steel)}
+
+  /* ============================ Overlays ============================ */
   .veil{
     position:fixed;inset:0;z-index:20;
     display:flex;align-items:center;justify-content:center;padding:20px;
-    background:#060B14E6;
-    opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s;
+    background:#060B14EE;opacity:0;visibility:hidden;
+    transition:opacity .4s ease,visibility .4s;
   }
   .veil.on{opacity:1;visibility:visible}
   .veil .close{
-    position:absolute;top:18px;right:20px;
-    background:none;border:0;color:var(--dim);cursor:pointer;font:inherit;
-    font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:8px;
+    position:absolute;top:18px;right:20px;background:none;border:0;color:var(--dim);
+    cursor:pointer;font:inherit;font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:8px;
   }
   .veil .close:hover{color:var(--cream)}
 
-  /* Impressum-Panel */
   .panel{
-    width:min(560px,100%);background:#101C31;border:1px solid #24375A;
-    padding:clamp(28px,5vw,46px);
-    transform:translateY(14px);transition:transform .5s cubic-bezier(.2,.8,.25,1);
-    max-height:86vh;overflow-y:auto;text-align:left;
+    width:min(620px,100%);background:var(--card);border:1px solid #24375A;
+    padding:clamp(26px,4vw,40px);text-align:left;max-height:88vh;overflow-y:auto;
+    transform:translateY(12px);transition:transform .4s cubic-bezier(.2,.8,.25,1);
   }
   .veil.on .panel{transform:none}
   .panel h2{
-    font-size:11px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;
-    color:var(--green);margin-bottom:26px;
+    font-size:10.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--green);margin-bottom:22px;
   }
-  .panel dl{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:14px 22px;font-size:14px;line-height:1.6}
-  .panel dt{
-    font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
-    padding-top:4px;
-  }
+  .panel dl{display:grid;grid-template-columns:minmax(88px,auto) 1fr;gap:10px 20px;font-size:13.5px;line-height:1.55}
+  .panel dt{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);padding-top:3px}
   .panel dd{color:#D4DCE9}
-  .panel .fine{
-    margin-top:26px;padding-top:18px;border-top:1px solid #1E3050;
-    font-size:12.5px;line-height:1.7;color:var(--dim);
+  .panel a{color:#9FB6DC;text-decoration:none;border-bottom:1px solid var(--navy-600)}
+  .panel a:hover{color:var(--cream)}
+  .panel .fein{
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--navy-700);
+    font-size:11.5px;line-height:1.65;color:var(--dim);
   }
-  .panel a{color:#9FB6DC;text-decoration:none;border-bottom:1px solid #2C4670;transition:color .25s,border-color .25s}
-  .panel a:hover,.panel a:focus-visible{color:var(--cream);border-bottom-color:var(--steel)}
-
-  /* Geschwärzte Akte */
-  .akte{
-    width:min(660px,100%);background:var(--cream);color:#1A1A18;
-    padding:clamp(26px,5vw,52px);
-    font-family:Georgia,"Times New Roman",serif;font-size:clamp(14px,2.2vw,17px);line-height:2.1;
-    box-shadow:0 30px 90px #0009;
-    transform:translateY(14px) scale(.985);transition:transform .5s cubic-bezier(.2,.8,.25,1);
-    max-height:86vh;overflow-y:auto;
-  }
-  .veil.on .akte{transform:none}
-  .akte .head{
-    display:flex;justify-content:space-between;gap:14px;
-    font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
-    color:#6B6B63;border-bottom:1px solid #CFC9BB;padding-bottom:12px;margin-bottom:clamp(20px,3.4vw,32px);line-height:1.6;
-  }
-  .akte .foot{
-    font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
-    color:#8C8579;border-top:1px solid #CFC9BB;padding-top:12px;margin-top:clamp(20px,3.4vw,32px);line-height:1.6;
-  }
-  .akte p+p{margin-top:1.1em}
-  .rd{
-    display:inline-block;position:relative;cursor:pointer;
-    background:#12120F;color:transparent;border-radius:1px;
-    padding:0 .28em;user-select:none;transition:background .45s ease,color .45s ease;
-  }
-  .rd:hover{background:#2E2E27}
-  .rd.open{background:transparent;color:#1A1A18;cursor:default}
-  .rd.locked{cursor:default}
-  .rd.locked:hover{background:#12120F}
+  .panel .fein b{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;font-weight:600}
 
   /* Wartemarke */
   .ticket{
-    width:min(430px,100%);background:var(--cream);color:#1A1A18;
+    position:relative;width:min(440px,100%);background:var(--cream);color:#1A1A18;
     padding:clamp(24px,5vw,38px) clamp(20px,4vw,34px) clamp(18px,3vw,26px);
     text-align:center;box-shadow:0 30px 90px #0009;
     transform:translateY(-40px);transition:transform .6s cubic-bezier(.2,.9,.25,1);
-    position:relative;
   }
   .veil.on .ticket{transform:none}
   .ticket::before,.ticket::after{
@@ -223,143 +273,164 @@
   }
   .ticket::before{left:-13px}
   .ticket::after{right:-13px}
-  .ticket .t-top{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#7A736A}
-  .ticket .t-nr{font-family:Georgia,"Times New Roman",serif;font-size:clamp(52px,13vw,76px);line-height:1.1;color:#A8322A;margin:.1em 0 .16em}
-  .ticket .t-sub{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#7A736A}
-  .ticket .t-cd{font-family:ui-monospace,monospace;font-size:clamp(12px,2.9vw,15px);letter-spacing:.13em;margin:.85em 0 .3em;color:#1A1A18}
-  .ticket .t-date{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:#7A736A}
-  .ticket .code{
-    display:flex;gap:2px;justify-content:center;align-items:flex-end;height:38px;margin-top:20px;
-    border-top:1px dashed #C6BFB1;padding-top:18px;
+  .t-top,.t-sub,.t-fuss{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#7A736A}
+  .t-nr{font-family:Georgia,"Times New Roman",serif;font-size:clamp(50px,12vw,72px);line-height:1.1;color:#A8322A;margin:.08em 0 .14em}
+  .t-ort{font-family:Georgia,"Times New Roman",serif;font-size:clamp(15px,3vw,19px);line-height:1.4;margin:.7em 0 .3em}
+  .t-hinweis{font-size:12.5px;line-height:1.6;color:#4A463F;margin-top:.9em}
+  .code{display:flex;gap:2px;justify-content:center;align-items:flex-end;height:34px;margin-top:18px;border-top:1px dashed #C6BFB1;padding-top:16px}
+  .code i{display:block;background:#1A1A18;width:2px;height:100%}
+
+  /* Easteregg: der Zulauf */
+  .zulauf{position:fixed;inset:0;z-index:24;pointer-events:none;overflow:hidden}
+  .puff{
+    position:absolute;opacity:0;
+    background:#fff;border-radius:10px;padding:10px 14px;
+    box-shadow:0 14px 40px #0006;
+    display:flex;align-items:center;justify-content:center;
+    animation:puffen 2.9s cubic-bezier(.2,.8,.3,1) forwards;
   }
-  .ticket .code i{display:block;background:#1A1A18;width:2px;height:100%}
+  .puff img,.puff svg{display:block;width:100%;height:auto}
+  @keyframes puffen{
+    0%{opacity:0;transform:scale(.3) rotate(-12deg)}
+    16%{opacity:1;transform:scale(1) rotate(0deg)}
+    74%{opacity:1;transform:scale(1) rotate(0deg)}
+    100%{opacity:0;transform:scale(.88) translateY(-20px)}
+  }
+  .ruf{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    font-size:clamp(30px,6vw,74px);font-weight:700;line-height:1.1;letter-spacing:-.02em;
+    color:var(--cream);text-align:center;white-space:nowrap;
+    opacity:0;animation:rufAuf 2.9s ease-out forwards;
+    padding:clamp(22px,3vw,38px) clamp(28px,5vw,64px);
+    background:rgba(8,14,26,.82);
+    box-shadow:0 20px 70px rgba(6,11,20,.7);
+  }
+  .ruf small{
+    display:block;margin-top:16px;font-size:clamp(12px,1.5vw,17px);font-weight:600;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--green-hell);
+  }
+  @keyframes rufAuf{
+    0%{opacity:0;transform:translate(-50%,-46%)}
+    28%{opacity:1;transform:translate(-50%,-50%)}
+    78%{opacity:1}
+    100%{opacity:0}
+  }
 
   @media (max-width:560px){
-    .clock{gap:6px}
-    .sep{display:none}
-    .unit{min-width:0;flex:1}
     footer.meta{flex-direction:column;align-items:flex-start;gap:7px}
-    .akte{line-height:1.95}
+    .panel dl{grid-template-columns:1fr;gap:3px 0}
+    .panel dt{padding-top:11px}
   }
-
   @media (prefers-reduced-motion:reduce){
-    .needle,.plus-halo{animation:none}
-    .needle{transform:rotate(37deg)}
-    *{transition-duration:.01ms!important}
+    *{animation-duration:.01ms!important;transition-duration:.01ms!important}
   }
 </style>
 </head>
-<body>
+<body class="p-zaehlt laeuft">
 
 <header class="meta">
   <span>Ambulante Versorgungsgemeinschaft</span>
-  <span>i.&nbsp;Gr.</span>
+  <span>Jena</span>
 </header>
 
+<div class="blitz" aria-hidden="true"></div>
+
 <main>
+  <section class="buehne">
+    <svg class="mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Signet der Ambulanten Versorgungsgemeinschaft: ein Kompass mit den Buchstaben A, V und G und einem grünen Pluszeichen.">
+      <g fill="none" stroke="#456394" stroke-width="11" stroke-linecap="round">
+        <path d="M126.03 41.53 A64 64 0 0 1 161.20 81.29"/>
+        <path d="M161.20 118.71 A64 64 0 0 1 118.71 161.20"/>
+        <path d="M81.29 161.20 A64 64 0 0 1 38.80 118.71"/>
+        <path d="M38.80 81.29 A64 64 0 0 1 73.97 41.53"/>
+      </g>
+      <g font-family="system-ui,-apple-system,'Segoe UI',Arial,sans-serif" font-weight="600"
+         font-size="30" fill="#456394" text-anchor="middle" dominant-baseline="central">
+        <text x="33" y="101">A</text><text x="167" y="101">G</text><text x="100" y="168">V</text>
+      </g>
+      <g class="plus-gruppe" id="eggPlus" role="button" aria-label="Pluszeichen im Signet">
+        <circle class="plus-halo" cx="100" cy="36" r="17" fill="#7F9E7F"/>
+        <circle cx="100" cy="36" r="17" fill="#7F9E7F"/>
+        <path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#F2EFE8" stroke-width="4.6" stroke-linecap="round" fill="none"/>
+      </g>
+      <g class="needle" id="nadel">
+        <path d="M100 38 L81 106 L100 162 Z" fill="#A9BCDC"/>
+        <path d="M100 38 L119 106 L100 162 Z" fill="#38578A"/>
+      </g>
+    </svg>
 
-  <svg class="mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo der Ambulanten Versorgungsgemeinschaft: ein Kompass, dessen Ring die Buchstaben A, V und G sowie ein grünes Pluszeichen trägt.">
-    <g fill="none" stroke="#456394" stroke-width="11" stroke-linecap="round">
-      <path d="M126.03 41.53 A64 64 0 0 1 161.20 81.29"/>
-      <path d="M161.20 118.71 A64 64 0 0 1 118.71 161.20"/>
-      <path d="M81.29 161.20 A64 64 0 0 1 38.80 118.71"/>
-      <path d="M38.80 81.29 A64 64 0 0 1 73.97 41.53"/>
-    </g>
-
-    <g font-family="system-ui,-apple-system,'Segoe UI',Arial,sans-serif" font-weight="600"
-       font-size="30" fill="#456394" text-anchor="middle" dominant-baseline="central">
-      <text x="33" y="101">A</text>
-      <text x="167" y="101">G</text>
-      <text x="100" y="168">V</text>
-    </g>
-
-    <g class="plus" id="eggPlus" tabindex="0" role="button" aria-label="Pluszeichen im Signet — anklicken">
-      <circle class="plus-halo" cx="100" cy="36" r="17" fill="#7F9E7F"/>
-      <circle cx="100" cy="36" r="17" fill="#7F9E7F"/>
-      <path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#F2EFE8" stroke-width="4.6" stroke-linecap="round"/>
-    </g>
-
-    <g class="needle" id="needle" tabindex="0" role="button"
-       aria-label="Kompassnadel — anklicken">
-      <path class="n-l" d="M100 38 L81 106 L100 162 Z" fill="#A9BCDC"/>
-      <path class="n-r" d="M100 38 L119 106 L100 162 Z" fill="#38578A"/>
-    </g>
-  </svg>
-
-  <h1 class="wordmark">
-    <span class="thin">Ambulante</span>
-    <span class="bold">Versorgungs&shy;gemeinschaft</span>
-  </h1>
-
-  <div>
-    <div class="clock" id="clock" role="timer" aria-live="off">
-      <div class="unit"><span class="num" id="d">--</span><span class="cap">Tage</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="h">--</span><span class="cap">Std</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="m">--</span><span class="cap">Min</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="s">--</span><span class="cap">Sek</span></div>
+    <div class="uhr" id="uhr" role="timer" aria-live="off">
+      <div class="einheit"><span class="zahl" id="tg">00</span><span class="kap">Tage</span></div>
+      <span class="doppel">:</span>
+      <div class="einheit"><span class="zahl" id="st">00</span><span class="kap">Std</span></div>
+      <span class="doppel">:</span>
+      <div class="einheit"><span class="zahl" id="mn">00</span><span class="kap">Min</span></div>
+      <span class="doppel">:</span>
+      <div class="einheit"><span class="zahl" id="sk">05</span><span class="kap">Sek</span></div>
     </div>
-  </div>
 
+    <h1 class="claim">Wir bauen <em>gemeinsam</em> an der <b>Primärversorgung von morgen</b>.</h1>
+
+    <div class="weiter"><span class="raute" role="button" tabindex="0" aria-label="Raute"></span>Weiterlesen</div>
+  </section>
+
+  <div class="inhalt">
+    <section class="fragen">
+      <div class="fragen-kopf">Woran wir glauben</div>
+      <div class="gitter" id="gitter"></div>
+    </section>
+
+    <p class="nachtrag">
+      Gebaut von zollsoft und DOCYET, gemeinsam mit der
+      <span class="koeder" id="eggAerzte" role="button" tabindex="0">Ärzteschaft</span>.
+    </p>
+  </div>
 </main>
 
 <footer class="meta">
-  <div class="ev">10. September 2026 · Berlin</div>
-  <button class="imp-btn" id="impBtn">Impressum</button>
+  <span>Ambulante Versorgungsgemeinschaft GmbH</span>
+  <button class="imp-btn" id="impBtn">Impressum &amp; Datenschutz</button>
 </footer>
 
-<!-- Impressum -->
 <div class="veil" id="veilImp" role="dialog" aria-modal="true" aria-labelledby="impH">
   <button class="close" data-close>Schließen</button>
   <div class="panel">
-    <h2 id="impH">Impressum</h2>
+    <h2 id="impH">Impressum &amp; Datenschutz</h2>
     <dl>
       <dt>Anbieter</dt>
-      <dd>AVG Ambulante Versorgungsgemeinschaft GmbH i.&nbsp;Gr.<br>Ernst-Haeckel-Platz 5/6, 07745 Jena</dd>
-
+      <dd>AVG Ambulante Versorgungsgemeinschaft GmbH<br>Ernst-Haeckel-Platz 5/6, 07745 Jena</dd>
       <dt>Geschäftsführer</dt>
       <dd>Christian Schmitz, Florian Bontrup</dd>
-
       <dt>Register</dt>
-      <dd>Eintragung ins Handelsregister beantragt.</dd>
-
+      <dd>Amtsgericht Jena, HRB 525144</dd>
       <dt>Kontakt</dt>
       <dd>
-        <a href="mailto:info@zollsoft.de">info@zollsoft.de</a><br>
+        <a href="tel:+4936412694162">03641 2694162</a><br>
+        <a href="mailto:info@zollsoft.de">info@zollsoft.de</a> ·
         <a href="mailto:info@docyet.com">info@docyet.com</a>
       </dd>
     </dl>
-    <p class="fine">
-      Diese Seite setzt keine Cookies, misst nichts und lädt nichts von Dritten.
-      Beim Aufruf protokolliert der Hoster technisch notwendige Zugriffsdaten
-      (Art. 6 Abs. 1 lit. f DSGVO).
+    <p class="fein">
+      <b>Datenschutz</b>
+      Diese Seite setzt keine Cookies, misst nichts und lädt nichts von Dritten. Der
+      Hoster GitHub protokolliert beim Aufruf ausschließlich technisch notwendige
+      Zugriffsdaten (Art. 6 Abs. 1 lit. f DSGVO) und löscht sie nach spätestens
+      30 Tagen. Sie haben das Recht auf Auskunft, Berichtigung, Löschung,
+      Einschränkung und Widerspruch sowie auf Beschwerde beim Thüringer
+      Landesbeauftragten für den Datenschutz.
     </p>
   </div>
 </div>
 
-<!-- Easteregg 1: die geschwärzte Akte -->
-<div class="veil" id="veilAkte" role="dialog" aria-modal="true" aria-label="Vertrauliches Dokument">
-  <button class="close" data-close>Schließen</button>
-  <div class="akte">
-    <div class="head"><span>Ambulante Versorgungsgemeinschaft</span><span>Vertraulich</span></div>
-    <p>Die <span class="rd">Gemeinschaft</span> zur Entlastung der <span class="rd">ambulanten Versorgung</span> wird am <span class="rd">10.09.2026</span> erstmals vorgestellt.</p>
-    <p>Alle <span class="rd">weiteren Angaben</span> sind bis dahin unter Verschluss zu halten.</p>
-    <p>Ort der Bekanntgabe: <span class="rd locked">Hausärztetag</span>, Berlin.</p>
-    <div class="foot">Freigabe in <span id="akteCd">--:--:--:--</span></div>
-  </div>
-</div>
-
-<!-- Easteregg 2: die Wartemarke -->
 <div class="veil" id="veilTicket" role="dialog" aria-modal="true" aria-label="Wartemarke Nummer 47">
   <button class="close" data-close>Schließen</button>
   <div class="ticket">
     <div class="t-top">Bitte ziehen Sie eine Nummer</div>
     <div class="t-nr">Nr. 47</div>
-    <div class="t-sub">Ihr Aufruf erfolgt in</div>
-    <div class="t-cd" id="ticketCd">--&nbsp;Tage · --&nbsp;Std · --&nbsp;Min · --&nbsp;Sek</div>
-    <div class="t-date">10.09.2026 · 09:00 Uhr</div>
+    <div class="t-sub">Ihr Aufruf erfolgt auf dem</div>
+    <div class="t-ort">47. Hausärztinnen- und Hausärztetag</div>
+    <div class="t-fuss">Berlin</div>
+    <p class="t-hinweis">Sie finden uns dort. Sprechen Sie uns an.</p>
     <div class="code" id="barcode"></div>
   </div>
 </div>
@@ -368,118 +439,313 @@
 (function(){
   "use strict";
 
-  // Bekanntgabe: 10. September 2026, 09:00 Uhr MESZ
-  var TARGET = new Date("2026-09-10T09:00:00+02:00").getTime();
+  /* Der Moment, auf den gezählt wird. */
+  var ZIEL = new Date("2026-09-10T11:00:00+02:00").getTime();
+  /* Danach sieht jeder Aufruf die letzten fünf Sekunden noch einmal. */
+  var WIEDERHOLUNG = 5;
+  /* Logo des Verbands. Liegt die Datei nicht daneben, springt das eigene Signet ein. */
+  var PARTNERLOGO = "haev-logo.png";
 
   var el = function(id){ return document.getElementById(id); };
-  var pad = function(n){ return String(n).padStart(2,"0"); };
+  var koerper = document.body;
+  var pad = function(n){ return String(n).padStart(2, "0"); };
+  var sanft = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var d=el("d"), h=el("h"), m=el("m"), s=el("s");
-  var clock=el("clock");
-  var akteCd=el("akteCd"), ticketCd=el("ticketCd");
-  var over=false;
+  if("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
 
-  function tick(){
-    var left = TARGET - Date.now();
-
-    if(left<=0){
-      if(!over){
-        over=true;
-        clock.innerHTML='<div class="done">Jetzt</div>';
-      }
-      akteCd.textContent="00:00:00:00";
-      ticketCd.textContent="Sie sind an der Reihe";
-      return;
+  /* --------------------------------------------------------- Rauten ----- */
+  /* Jede Raute ist eine kleine Kompassnadel und dreht sich, wenn man sie antippt. */
+  function rauteBeleben(r){
+    var drehung = 0;
+    function dreh(){
+      drehung += 720;
+      r.style.transform = "rotate(" + drehung + "deg)";
     }
-
-    var sec=Math.floor(left/1000);
-    var dd=Math.floor(sec/86400),
-        hh=Math.floor(sec%86400/3600),
-        mm=Math.floor(sec%3600/60),
-        ss=sec%60;
-
-    d.textContent=pad(dd); h.textContent=pad(hh);
-    m.textContent=pad(mm); s.textContent=pad(ss);
-
-    akteCd.textContent=pad(dd)+":"+pad(hh)+":"+pad(mm)+":"+pad(ss);
-    ticketCd.innerHTML=dd+" Tage · "+pad(hh)+" Std · "+pad(mm)+" Min · "+pad(ss)+" Sek";
-  }
-  tick();
-  setInterval(tick,1000);
-
-  /* ---------- Overlays ---------- */
-  function open(v){
-    v.classList.add("on");
-    document.body.style.overflow="hidden";
-    v.querySelector("[data-close]").focus();
-  }
-  function shut(v){
-    v.classList.remove("on");
-    document.body.style.overflow="";
-  }
-  document.querySelectorAll(".veil").forEach(function(v){
-    v.addEventListener("click",function(e){
-      if(e.target===v || e.target.hasAttribute("data-close")) shut(v);
+    r.addEventListener("click", dreh);
+    r.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); dreh(); }
     });
-  });
-  document.addEventListener("keydown",function(e){
-    if(e.key==="Escape") document.querySelectorAll(".veil.on").forEach(shut);
-  });
-
-  /* ---------- Easteregg 1: Nadel anklicken -> geschwärzte Akte ---------- */
-  var needle=el("needle"), veilAkte=el("veilAkte");
-
-  function spin(){
-    needle.classList.remove("spin");
-    void needle.getBoundingClientRect();
-    needle.classList.add("spin");
-    setTimeout(function(){ open(veilAkte); },820);
-    setTimeout(function(){ needle.classList.remove("spin"); },1700);
   }
-  needle.addEventListener("click",spin);
-  needle.addEventListener("keydown",function(e){
-    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); spin(); }
+
+  /* -------------------------------------------------------- Kacheln ----- */
+  var FRAGEN = [
+    { f: "Warum können Praxen ihre Daten nicht einfach von einem System ins nächste mitnehmen?",
+      g: "Wir glauben an offene Schnittstellen. Und gegen Knebelverträge." },
+    { f: "Wie bringt man die Einfachheit zentraler Plattformen mit lokalen Versorgungskonzepten zusammen?",
+      g: "Wir glauben an individuelle Konfiguration auf standardisierten Prozessen." },
+    { f: "Wer entscheidet eigentlich, welchen Weg ein Patient durch die Versorgung nimmt?",
+      g: "Wir glauben, dass Behandlungspfade der Ärzteschaft gehören. Nicht dem Anbieter." },
+    { f: "Wenn eine Anwendung nichts kostet: Wer bezahlt sie dann?",
+      g: "Wir glauben an ehrliche Preise. Nicht an Geschäftsmodelle mit Behandlungsdaten." },
+    { f: "Muss künstliche Intelligenz den Menschen in der Medizin ersetzen?",
+      g: "Wir glauben das Gegenteil. Richtig eingesetzt entlastet sie und stärkt die ärztliche Entscheidung." },
+    { f: "Warum arbeiten Haus- und Fachärzte oft nebeneinander statt miteinander?",
+      g: "Wir glauben, dass Zusammenarbeit Synergien schafft. Gegeneinander schafft nur Wartezeit." },
+    { f: "Warum landet alles beim Arzt, was das Team längst könnte?",
+      g: "Wir glauben an Delegation als Entlastung. Nicht als Notlösung." }
+  ];
+
+  var gitter = el("gitter");
+  FRAGEN.forEach(function(q){
+    var k = document.createElement("article");
+    k.className = "kachel";
+
+    var f = document.createElement("p");
+    f.className = "frage"; f.textContent = q.f;
+
+    var block = document.createElement("div");
+    block.className = "antwortblock";
+
+    var r = document.createElement("span");
+    r.className = "raute"; r.setAttribute("role", "button");
+    r.setAttribute("tabindex", "0"); r.setAttribute("aria-label", "Raute");
+    rauteBeleben(r);
+
+    var g = document.createElement("p");
+    g.className = "glaube"; g.textContent = q.g;
+
+    block.appendChild(r); block.appendChild(g);
+    k.appendChild(f); k.appendChild(block);
+    gitter.appendChild(k);
   });
 
-  // Schwärzungen einzeln aufdecken. "locked" bleibt schwarz.
-  document.querySelectorAll(".rd:not(.locked)").forEach(function(r){
-    r.addEventListener("click",function(){ r.classList.add("open"); });
-  });
+  /* Die neunte Kachel bleibt offen: hier darf jeder seine Frage dalassen. */
+  (function mitmachKachel(){
+    var k = document.createElement("article");
+    k.className = "kachel kachel-offen";
 
-  /* ---------- Easteregg 2: "47" tippen oder im Footer antippen ---------- */
-  var veilTicket=el("veilTicket");
+    var f = document.createElement("p");
+    f.className = "frage";
+    f.textContent = "Welche Frage fehlt hier noch?";
 
-  // Barcode einmalig, deterministisch aus "AVG47"
-  (function(){
-    var bar=el("barcode"), seed=4711, html="";
-    for(var i=0;i<58;i++){
-      seed=(seed*1103515245+12345)%2147483648;
-      var w=1+(seed>>16)%3, hgt=55+(seed>>8)%45;
-      html+='<i style="width:'+w+'px;height:'+hgt+'%"></i>';
-    }
-    bar.innerHTML=html;
+    var form = document.createElement("form");
+    form.className = "mitmach";
+
+    var feld = document.createElement("textarea");
+    feld.rows = 3;
+    feld.placeholder = "Ihre Frage, Ihre Idee, Ihr Glaubenssatz";
+    feld.setAttribute("aria-label", "Ihre Frage, Idee oder Ihr Glaubenssatz");
+
+    var knopf = document.createElement("button");
+    knopf.type = "submit";
+    knopf.textContent = "Abschicken";
+
+    var hinweis = document.createElement("p");
+    hinweis.className = "hinweis";
+    hinweis.textContent = "Geht an avg@docyet.com, öffnet Ihr E-Mail-Programm.";
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var text = feld.value.trim();
+      if(!text){ feld.focus(); return; }
+      window.location.href = "mailto:avg@docyet.com" +
+        "?subject=" + encodeURIComponent("Eine Frage an die AVG") +
+        "&body=" + encodeURIComponent(text);
+    });
+
+    form.appendChild(feld); form.appendChild(knopf); form.appendChild(hinweis);
+    k.appendChild(f); k.appendChild(form);
+    gitter.appendChild(k);
   })();
 
-  function ticket(){ open(veilTicket); }
+  document.querySelectorAll(".weiter .raute").forEach(rauteBeleben);
 
-  var eggPlus=el("eggPlus");
-  eggPlus.addEventListener("click",ticket);
-  eggPlus.addEventListener("keydown",function(e){
-    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); ticket(); }
+  /* ---------------------------------------------------------- Nadel ----- */
+  var nadel = el("nadel");
+  var geloest = false;
+
+  function nadelEinrasten(){ nadel.classList.add("dreht"); }
+
+  function nadelLoesen(){
+    if(geloest || !nadel.classList.contains("dreht")) return;
+    geloest = true;
+    nadel.style.transform = "rotate(1440deg)";     // Endstand der Drehung festhalten
+    nadel.classList.remove("dreht");
+    nadel.style.animation = "none";
+    void nadel.offsetWidth;
+    nadel.style.transition = "transform 1.1s ease-in-out";
+    nadel.style.transform = "rotate(1477deg)";     // 1440 + 37, wieder die Ruhelage
+    setTimeout(function(){
+      nadel.style.transition = "";
+      nadel.style.transform = "";
+      nadel.style.animation = "";                  // das ruhige Suchen läuft weiter
+    }, 1150);
+  }
+
+  function pruefeScroll(){
+    if(koerper.classList.contains("p-fertig") && window.scrollY > 60) nadelLoesen();
+  }
+  window.addEventListener("scroll", pruefeScroll, { passive: true });
+  window.addEventListener("wheel", pruefeScroll, { passive: true });
+  window.addEventListener("touchmove", pruefeScroll, { passive: true });
+
+  /* ----------------------------------------------------- Phasenablauf --- */
+  function phase(name){
+    koerper.classList.remove("p-zaehlt", "p-schluss", "p-claim", "p-fertig");
+    koerper.classList.add(name);
+  }
+  var gelaufen = false;
+
+  function schluss(){
+    if(gelaufen) return;
+    gelaufen = true;
+    if(sanft){ fertig(); return; }
+    phase("p-schluss");
+    nadelEinrasten();
+    setTimeout(function(){ phase("p-claim"); }, 2450);
+    setTimeout(fertig, 3900);
+  }
+  function fertig(){
+    phase("p-fertig");
+    koerper.classList.remove("laeuft");
+    window.scrollTo(0, 0);
+  }
+
+  /* -------------------------------------------------------- Countdown --- */
+  var tg = el("tg"), st = el("st"), mn = el("mn"), sk = el("sk");
+  var letzteSek = null;
+
+  function zeige(d, h, m, s){
+    tg.textContent = pad(d); st.textContent = pad(h); mn.textContent = pad(m);
+    if(s !== letzteSek){
+      sk.textContent = pad(s);
+      sk.classList.remove("tickt"); void sk.offsetWidth; sk.classList.add("tickt");
+      letzteSek = s;
+    }
+  }
+
+  if(ZIEL - Date.now() > 0){
+    /* Der echte Countdown. Läuft er ab, während jemand zusieht, geht es nahtlos weiter. */
+    (function echt(){
+      var uebrig = ZIEL - Date.now();
+      if(uebrig <= 0){ zeige(0,0,0,0); schluss(); return; }
+      var sec = Math.floor(uebrig / 1000);
+      zeige(Math.floor(sec/86400), Math.floor(sec%86400/3600), Math.floor(sec%3600/60), sec%60);
+      setTimeout(echt, 250);
+    })();
+  } else {
+    /* Danach: bei jedem Aufruf die letzten fünf Sekunden. */
+    var n = WIEDERHOLUNG;
+    zeige(0, 0, 0, n);
+    (function wiederholen(){
+      n--;
+      zeige(0, 0, 0, Math.max(n, 0));
+      if(n <= 0){ schluss(); return; }
+      setTimeout(wiederholen, 1000);
+    })();
+  }
+
+  if(sanft) schluss();
+
+  /* --------------------------------------------------------- Overlays --- */
+  function auf(v){ v.classList.add("on"); v.querySelector("[data-close]").focus(); }
+  function zu(v){ v.classList.remove("on"); }
+  document.querySelectorAll(".veil").forEach(function(v){
+    v.addEventListener("click", function(e){
+      if(e.target === v || e.target.hasAttribute("data-close")) zu(v);
+    });
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") document.querySelectorAll(".veil.on").forEach(zu);
+  });
+  el("impBtn").addEventListener("click", function(){ auf(el("veilImp")); });
+
+  /* --------------------------------------- Easteregg: Wartemarke Nr. 47 - */
+  (function(){
+    var bar = el("barcode"), seed = 4711, html = "";
+    for(var i = 0; i < 58; i++){
+      seed = (seed * 1103515245 + 12345) % 2147483648;
+      html += '<i style="width:' + (1 + (seed >> 16) % 3) + 'px;height:' + (55 + (seed >> 8) % 45) + '%"></i>';
+    }
+    bar.innerHTML = html;
+  })();
+
+  function wartemarke(){
+    if(!koerper.classList.contains("p-fertig")) return;
+    auf(el("veilTicket"));
+  }
+  el("eggPlus").addEventListener("click", wartemarke);
+
+  var getippt = "";
+  document.addEventListener("keydown", function(e){
+    if(e.key.length !== 1) return;
+    getippt = (getippt + e.key).slice(-2);
+    if(getippt === "47"){ getippt = ""; wartemarke(); }
   });
 
-  /* ---------- Impressum ---------- */
-  el("impBtn").addEventListener("click",function(){ open(el("veilImp")); });
+  /* ------------------------------------------ Easteregg: der Zulauf ----- */
+  var EIGENES_SIGNET =
+    '<svg viewBox="0 0 200 200" width="100%" height="100%">' +
+      '<g fill="none" stroke="#1F2E4A" stroke-width="13" stroke-linecap="round">' +
+        '<path d="M126.03 41.53 A64 64 0 0 1 161.20 81.29"/>' +
+        '<path d="M161.20 118.71 A64 64 0 0 1 118.71 161.20"/>' +
+        '<path d="M81.29 161.20 A64 64 0 0 1 38.80 118.71"/>' +
+        '<path d="M38.80 81.29 A64 64 0 0 1 73.97 41.53"/>' +
+      '</g>' +
+      '<circle cx="100" cy="36" r="17" fill="#7F9E7F"/>' +
+      '<path d="M100 27.5 V44.5 M91.5 36 H108.5" stroke="#fff" stroke-width="4.6" stroke-linecap="round"/>' +
+      '<g transform="rotate(37 100 100)">' +
+        '<path d="M100 38 L81 106 L100 162 Z" fill="#8CA3C9"/>' +
+        '<path d="M100 38 L119 106 L100 162 Z" fill="#1F2E4A"/>' +
+      '</g>' +
+    '</svg>';
 
-  var typed="";
-  document.addEventListener("keydown",function(e){
-    if(e.key.length!==1) return;
-    typed=(typed+e.key).slice(-2);
-    if(typed==="47"){ typed=""; ticket(); }
+  var logoDa = null;   // null = noch nicht geprüft
+  (function pruefeLogo(){
+    var probe = new Image();
+    probe.onload  = function(){ logoDa = true;  };
+    probe.onerror = function(){ logoDa = false; };
+    probe.src = PARTNERLOGO;
+  })();
+
+  var laeuftZulauf = false;
+  function zulauf(){
+    if(laeuftZulauf) return;
+    laeuftZulauf = true;
+
+    var buehne = document.createElement("div");
+    buehne.className = "zulauf";
+    buehne.setAttribute("aria-hidden", "true");
+
+    var anzahl = window.innerWidth < 700 ? 14 : 24;
+    for(var i = 0; i < anzahl; i++){
+      var p = document.createElement("div");
+      p.className = "puff";
+      var breit = logoDa ? (170 + Math.random() * 120) : (54 + Math.random() * 46);
+      p.style.width = breit + "px";
+      p.style.left = (Math.random() * 82 + 3) + "%";
+      p.style.top = (Math.random() * 76 + 8) + "%";
+      p.style.animationDelay = (Math.random() * 1.2).toFixed(2) + "s";
+
+      if(logoDa){
+        var img = document.createElement("img");
+        img.src = PARTNERLOGO;
+        img.alt = "";
+        p.appendChild(img);
+      } else {
+        p.innerHTML = EIGENES_SIGNET;
+      }
+      buehne.appendChild(p);
+    }
+
+    var ruf = document.createElement("div");
+    ruf.className = "ruf";
+    ruf.innerHTML = "Und es werden mehr.<small>More coming soon</small>";
+    buehne.appendChild(ruf);
+
+    document.body.appendChild(buehne);
+    setTimeout(function(){ buehne.remove(); laeuftZulauf = false; }, 4200);
+  }
+
+  var koeder = el("eggAerzte");
+  koeder.addEventListener("click", zulauf);
+  koeder.addEventListener("keydown", function(e){
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); zulauf(); }
   });
 
-  console.log("%cAmbulante Versorgungsgemeinschaft","color:#7F9E7F;font:600 14px system-ui");
-  console.log("%cDie Nadel weiß mehr. Und 47 ist keine zufällige Zahl.","color:#6E86AE;font:12px ui-monospace,monospace");
+  console.log("%cAmbulante Versorgungsgemeinschaft", "color:#7F9E7F;font:600 14px system-ui");
+  console.log("%cGemeinsam gebaut von zollsoft und DOCYET.", "color:#6E86AE;font:12px ui-monospace,monospace");
 })();
 </script>
 
