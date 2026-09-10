@@ -158,6 +158,10 @@
   body:not(.p-fertig) .inhalt{pointer-events:none}
   /* Die Fusszeile bleibt in jeder Phase sichtbar: das Impressum muss nach
      § 5 DDG staendig erreichbar sein, auch waehrend der Countdown laeuft. */
+  /* Solange der Countdown laeuft, ist die Seite auf 100dvh beschnitten und die
+     noch unsichtbaren Kacheln draengen die Fusszeile darunter. Deshalb heftet
+     sie in dieser Phase an den unteren Rand. */
+  body.laeuft footer.meta{position:fixed;left:0;right:0;bottom:0;z-index:5}
 
   .blitz{position:fixed;inset:0;z-index:4;pointer-events:none;background:#A8C5A8;opacity:0;mix-blend-mode:screen}
   body.p-schluss .blitz{animation:blitzen 1.2s ease-out 2.4s}
