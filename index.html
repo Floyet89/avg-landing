@@ -321,6 +321,41 @@
     100%{opacity:0}
   }
 
+  /* Easteregg: ein Partner, groß, und daneben der Ausblick auf das, was folgt. */
+  .zulauf-eins{
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(18px,3.6vw,56px);padding:clamp(16px,4vw,56px);flex-wrap:wrap;
+  }
+  .puff-gross{
+    position:relative;opacity:1;
+    width:clamp(190px,32vw,430px);
+    padding:clamp(18px,2.4vw,34px) clamp(20px,2.8vw,44px);
+    border-radius:16px;
+    animation:puffGross 4.2s cubic-bezier(.2,.8,.3,1) forwards;
+  }
+  @keyframes puffGross{
+    0%{opacity:0;transform:scale(.34) rotate(-9deg)}
+    14%{opacity:1;transform:scale(1) rotate(0deg)}
+    86%{opacity:1;transform:scale(1) rotate(0deg)}
+    100%{opacity:0;transform:scale(.94) translateY(-16px)}
+  }
+  .ruf-neben{
+    position:static;left:auto;top:auto;transform:none;white-space:normal;
+    max-width:min(28ch,42vw);text-align:left;
+    font-size:clamp(20px,3.2vw,42px);
+    animation:rufNeben 4.2s ease-out forwards;
+  }
+  @keyframes rufNeben{
+    0%{opacity:0;transform:translateX(-20px)}
+    20%{opacity:1;transform:none}
+    86%{opacity:1;transform:none}
+    100%{opacity:0;transform:translateY(-8px)}
+  }
+  @media (max-width:760px){
+    .zulauf-eins{flex-direction:column;gap:clamp(14px,3vw,24px)}
+    .ruf-neben{text-align:center;max-width:min(28ch,86vw)}
+  }
+
   @media (max-width:560px){
     footer.meta{flex-direction:column;align-items:flex-start;gap:7px}
     .panel dl{grid-template-columns:1fr;gap:3px 0}
@@ -476,7 +511,7 @@
   /* -------------------------------------------------------- Kacheln ----- */
   var FRAGEN = [
     { f: "Warum können Praxen ihre Daten nicht einfach von einem System ins nächste mitnehmen?",
-      g: "Wir glauben an offene Schnittstellen. Und gegen Knebelverträge." },
+      g: "Wir glauben an Flexibilität, nicht an Knebelverträge." },
     { f: "Wie bringt man die Einfachheit zentraler Plattformen mit lokalen Versorgungskonzepten zusammen?",
       g: "Wir glauben an individuelle Konfiguration auf standardisierten Prozessen." },
     { f: "Wer entscheidet eigentlich, welchen Weg ein Patient durch die Versorgung nimmt?",
@@ -710,33 +745,26 @@
     laeuftZulauf = true;
 
     var buehne = document.createElement("div");
-    buehne.className = "zulauf";
+    buehne.className = "zulauf zulauf-eins";
     buehne.setAttribute("aria-hidden", "true");
 
-    var anzahl = window.innerWidth < 700 ? 14 : 24;
-    for(var i = 0; i < anzahl; i++){
-      var p = document.createElement("div");
-      p.className = "puff";
-      var breit = logoDa ? (170 + Math.random() * 120) : (54 + Math.random() * 46);
-      p.style.width = breit + "px";
-      p.style.left = (Math.random() * 82 + 3) + "%";
-      p.style.top = (Math.random() * 76 + 8) + "%";
-      p.style.animationDelay = (Math.random() * 1.2).toFixed(2) + "s";
+    /* Bewusst genau ein Partner, dafür groß. Die nächsten folgen noch. */
+    var p = document.createElement("div");
+    p.className = "puff puff-gross";
 
-      if(logoDa){
-        var img = document.createElement("img");
-        img.src = PARTNERLOGO;
-        img.alt = "";
-        p.appendChild(img);
-      } else {
-        p.innerHTML = EIGENES_SIGNET;
-      }
-      buehne.appendChild(p);
+    if(logoDa){
+      var img = document.createElement("img");
+      img.src = PARTNERLOGO;
+      img.alt = "";
+      p.appendChild(img);
+    } else {
+      p.innerHTML = EIGENES_SIGNET;
     }
+    buehne.appendChild(p);
 
     var ruf = document.createElement("div");
-    ruf.className = "ruf";
-    ruf.innerHTML = "Und es werden mehr.<small>More coming soon</small>";
+    ruf.className = "ruf ruf-neben";
+    ruf.innerHTML = "Weitere Verbände folgen bald.<small>More coming soon</small>";
     buehne.appendChild(ruf);
 
     document.body.appendChild(buehne);
